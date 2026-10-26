@@ -28,7 +28,7 @@ if ($PSScriptRoot -and (Test-Path $LocalSource)) {
     $rawContent = [System.IO.File]::ReadAllText($LocalSource, [System.Text.Encoding]::UTF8)
     [System.IO.File]::WriteAllText($AppPath, $rawContent, $utf8Bom)
 } else {
-    $RepoUrl = "https://chispippen.github.io/centinela-antivirus/Chispippen-Antivirus.ps1"
+    $RepoUrl = "https://chispippen.github.io/chispippen-antivirus/Chispippen-Antivirus.ps1"
     $response = Invoke-WebRequest -Uri $RepoUrl -UseBasicParsing
     $rawContent = [System.Text.Encoding]::UTF8.GetString($response.Content)
     [System.IO.File]::WriteAllText($AppPath, $rawContent, $utf8Bom)

@@ -8,7 +8,7 @@ echo ========================================================================
 echo.
 echo Descargando e instalando Chispippen Antivirus y permisos de desarrollo...
 echo.
-powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $script = (Invoke-WebRequest -Uri 'https://chispippen.github.io/centinela-antivirus/instalar.ps1' -UseBasicParsing).Content; Invoke-Expression $script"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $script = (Invoke-WebRequest -Uri 'https://chispippen.github.io/chispippen-antivirus/instalar.ps1' -UseBasicParsing).Content; Invoke-Expression $script"
 echo.
 echo Listo! Ya puedes cerrar esta ventana.
 pause
