@@ -6,6 +6,16 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
+# Ocultar la consola negra de fondo dejando visible la ventana grafica de Chispippen Antivirus
+Add-Type -Name Win32Window -Namespace Chispippen -MemberDefinition '
+    [DllImport("Kernel32.dll")] public static extern IntPtr GetConsoleWindow();
+    [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
+' -ErrorAction SilentlyContinue
+$consolePtr = [Chispippen.Win32Window]::GetConsoleWindow()
+if ($consolePtr -ne [IntPtr]::Zero) {
+    [Chispippen.Win32Window]::ShowWindow($consolePtr, 0) | Out-Null
+}
+
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 function Test-IsAdmin {
@@ -430,5 +440,11 @@ Write-Log "Bienvenido a CHISPIPPEN ANTIVIRUS (Chisparo Security — Edición Neg
 Write-Log "• Diseñado especialmente para proteger tu PC mientras trabajas libremente con Antigravity, GitHub y Localhost." "#E2E8F0"
 Write-Log "• Haz clic en '1. Blindar + Modo Antigravity' para autorizar todos los puertos Localhost, GitHub y carpetas de trabajo." "#34D399"
 Write-Log "• Haz clic en '2. Verificar GitHub & Localhost' para comprobar que tus herramientas del negocio de Jace estén listas." "#93C5FD"
+
+$form.Add_Shown({
+    $form.TopMost = $true
+    $form.Activate()
+    $form.BringToFront()
+})
 
 [void]$form.ShowDialog()

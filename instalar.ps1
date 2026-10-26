@@ -36,7 +36,7 @@ if ($PSScriptRoot -and (Test-Path $LocalSource)) {
 
 $BatContent = @"
 @echo off
-start "" powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "%LOCALAPPDATA%\ChispippenAntivirus\Chispippen-Antivirus.ps1"
+start "" powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%LOCALAPPDATA%\ChispippenAntivirus\Chispippen-Antivirus.ps1"
 "@
 [System.IO.File]::WriteAllText($BatPath, $BatContent, [System.Text.Encoding]::ASCII)
 
@@ -51,7 +51,7 @@ try {
     $WshShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
     $Shortcut.TargetPath = "powershell.exe"
-    $Shortcut.Arguments = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$AppPath`""
+    $Shortcut.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$AppPath`""
     $Shortcut.WorkingDirectory = $InstallDir
     $Shortcut.IconLocation = "imageres.dll,101"
     $Shortcut.Description = "Chispippen Antivirus (Chisparo Security) - Antigravity, GitHub & Localhost"
@@ -116,7 +116,7 @@ if ($isAdmin) {
 }
 
 Write-Host "[5/5] Abriendo Chispippen Antivirus ..." -ForegroundColor Yellow
-Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$AppPath`""
+Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$AppPath`""
 
 Write-Host ""
 Write-Host "=====================================================================" -ForegroundColor Green
