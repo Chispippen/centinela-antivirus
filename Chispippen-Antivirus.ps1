@@ -1,4 +1,4 @@
-﻿# ==============================================================================
+# ==============================================================================
 # CHISPIPPEN ANTIVIRUS (CHISPARO SECURITY EDITION) - WINDOWS 10/11
 # Blindaje de Seguridad + Modo Antigravity, GitHub & Localhost (Negocio de Jace)
 # ==============================================================================
@@ -10,6 +10,7 @@ Add-Type -AssemblyName System.Drawing
 Add-Type -Name Win32Window -Namespace Chispippen -MemberDefinition '
     [DllImport("Kernel32.dll")] public static extern IntPtr GetConsoleWindow();
     [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
+    [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
 ' -ErrorAction SilentlyContinue
 $consolePtr = [Chispippen.Win32Window]::GetConsoleWindow()
 if ($consolePtr -ne [IntPtr]::Zero) {
@@ -81,7 +82,7 @@ if (-not (Test-Path $QuarantineDir)) { New-Item -ItemType Directory -Path $Quara
 # INTERFAZ GRAFICA DE CHISPIPPEN ANTIVIRUS
 # ==============================================================================
 $form = New-Object System.Windows.Forms.Form
-$form.Text = "Chispippen Antivirus (Chisparo Security) — Edición Negocio de Jace & Antigravity"
+$form.Text = "Chispippen Antivirus (Chisparo Security) $([char]8212) Edici$([char]243)n Negocio de Jace & Antigravity"
 $form.Size = New-Object System.Drawing.Size(980, 700)
 $form.StartPosition = "CenterScreen"
 $form.BackColor = [System.Drawing.Color]::FromArgb(13, 19, 33)
@@ -104,7 +105,7 @@ $headerPanel.BackColor = [System.Drawing.Color]::FromArgb(24, 34, 56)
 $form.Controls.Add($headerPanel)
 
 $lblTitle = New-Object System.Windows.Forms.Label
-$lblTitle.Text = "⚡🛡️ CHISPIPPEN ANTIVIRUS  |  CHISPARO SECURITY"
+$lblTitle.Text = "$([char]9889)$([char]::ConvertFromUtf32(128737))$([char]65039) CHISPIPPEN ANTIVIRUS  |  CHISPARO SECURITY"
 $lblTitle.Font = $fontTitle
 $lblTitle.ForeColor = [System.Drawing.Color]::FromArgb(56, 189, 248)
 $lblTitle.Location = New-Object System.Drawing.Point(24, 14)
@@ -112,7 +113,7 @@ $lblTitle.AutoSize = $true
 $headerPanel.Controls.Add($lblTitle)
 
 $lblSub = New-Object System.Windows.Forms.Label
-$lblSub.Text = "Protección Total + Acceso Libre para Antigravity, GitHub, Node.js y Localhost (Sistema del Negocio de Jace)"
+$lblSub.Text = "Protecci$([char]243)n Total + Acceso Libre para Antigravity, GitHub, Node.js y Localhost (Sistema del Negocio de Jace)"
 $lblSub.Font = $fontSubtitle
 $lblSub.ForeColor = [System.Drawing.Color]::FromArgb(148, 163, 184)
 $lblSub.Location = New-Object System.Drawing.Point(28, 48)
@@ -162,10 +163,10 @@ function New-ActionButton($text, $x, $y, $w, $h, $bgColor) {
 }
 
 # Fila 1 de Botones Principales
-$btnHardenDev = New-ActionButton "🛡️ 1. Blindar + Modo Antigravity" 24 246 225 46 ([System.Drawing.Color]::FromArgb(16, 185, 129))
-$btnCheckDev = New-ActionButton "🚀 2. Verificar GitHub & Localhost" 260 246 230 46 ([System.Drawing.Color]::FromArgb(14, 165, 233))
-$btnQuickScan = New-ActionButton "⚡ 3. Escaneo Rápido + Heurístico" 501 246 225 46 ([System.Drawing.Color]::FromArgb(99, 102, 241))
-$btnNetAudit = New-ActionButton "🌐 4. Monitor de Red y Procesos" 737 246 207 46 ([System.Drawing.Color]::FromArgb(139, 92, 246))
+$btnHardenDev = New-ActionButton "$([char]::ConvertFromUtf32(128737))$([char]65039) 1. Blindar + Modo Antigravity" 24 246 225 46 ([System.Drawing.Color]::FromArgb(16, 185, 129))
+$btnCheckDev = New-ActionButton "$([char]::ConvertFromUtf32(128640)) 2. Verificar GitHub & Localhost" 260 246 230 46 ([System.Drawing.Color]::FromArgb(14, 165, 233))
+$btnQuickScan = New-ActionButton "$([char]9889) 3. Escaneo R$([char]225)pido + Heur$([char]237)stico" 501 246 225 46 ([System.Drawing.Color]::FromArgb(99, 102, 241))
+$btnNetAudit = New-ActionButton "$([char]::ConvertFromUtf32(127760)) 4. Monitor de Red y Procesos" 737 246 207 46 ([System.Drawing.Color]::FromArgb(139, 92, 246))
 
 $form.Controls.Add($btnHardenDev)
 $form.Controls.Add($btnCheckDev)
@@ -173,10 +174,10 @@ $form.Controls.Add($btnQuickScan)
 $form.Controls.Add($btnNetAudit)
 
 # Fila 2 de Botones Secundarios
-$btnUpdateSigs = New-ActionButton "🔄 Actualizar Firmas de Virus" 24 302 225 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
-$btnScanFolder = New-ActionButton "📂 Escanear Carpeta o USB..." 260 302 230 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
-$btnCleanTemp = New-ActionButton "🧹 Limpiar Basura Temporal" 501 302 225 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
-$btnScheduleTask = New-ActionButton "⏰ Escaneo Diario Automático" 737 302 207 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
+$btnUpdateSigs = New-ActionButton "$([char]::ConvertFromUtf32(128260)) Actualizar Firmas de Virus" 24 302 225 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
+$btnScanFolder = New-ActionButton "$([char]::ConvertFromUtf32(128194)) Escanear Carpeta o USB..." 260 302 230 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
+$btnCleanTemp = New-ActionButton "$([char]::ConvertFromUtf32(129529)) Limpiar Basura Temporal" 501 302 225 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
+$btnScheduleTask = New-ActionButton "$([char]9200) Escaneo Diario Autom$([char]225)tico" 737 302 207 38 ([System.Drawing.Color]::FromArgb(51, 65, 85))
 
 $form.Controls.Add($btnUpdateSigs)
 $form.Controls.Add($btnScanFolder)
@@ -207,26 +208,26 @@ function Write-Log($msg, $color = "#E2E8F0") {
 function Refresh-UIStatus {
     $s = Get-SecurityStatus
     if ($s.IsAdmin) {
-        $lblAdminBadge.Text = "✅ MODO ADMINISTRADOR"
+        $lblAdminBadge.Text = "$([char]9989) MODO ADMINISTRADOR"
         $lblAdminBadge.BackColor = [System.Drawing.Color]::FromArgb(6, 95, 70)
         $lblAdminBadge.ForeColor = [System.Drawing.Color]::FromArgb(167, 243, 208)
     } else {
-        $lblAdminBadge.Text = "⚡ CHISPARO ACTIVO"
+        $lblAdminBadge.Text = "$([char]9889) CHISPARO ACTIVO"
         $lblAdminBadge.BackColor = [System.Drawing.Color]::FromArgb(30, 58, 138)
         $lblAdminBadge.ForeColor = [System.Drawing.Color]::FromArgb(191, 219, 254)
     }
 
-    $rtIcon = if ($s.RealTime) { "✅ Activo" } else { "❌ Inactivo" }
-    $fwIcon = if ($s.Firewall) { "✅ Activo" } else { "❌ Inactivo" }
-    $puaIcon = if ($s.PUABlock) { "✅ Bloqueando Adware" } else { "⚠️ Clic en Botón 1 para Activar" }
-    $netIcon = if ($s.NetworkProt) { "✅ Activo (Anti-Phishing)" } else { "⚠️ Clic en Botón 1 para Activar" }
-    $devIcon = if ($s.DevModeReady) { "✅ Permisos Activos (Antigravity + GitHub + Localhost)" } else { "⚡ Clic en Botón 1 para Autorizar Permisos" }
-    $scanText = if ($s.QuickScanAge -gt 365) { "⚠️ Nunca registrado" } else { "✅ Hace $($s.QuickScanAge) días" }
+    $rtIcon = if ($s.RealTime) { "$([char]9989) Activo" } else { "$([char]10060) Inactivo" }
+    $fwIcon = if ($s.Firewall) { "$([char]9989) Activo" } else { "$([char]10060) Inactivo" }
+    $puaIcon = if ($s.PUABlock) { "$([char]9989) Bloqueando Adware" } else { "$([char]9888)$([char]65039) Clic en Bot$([char]243)n 1 para Activar" }
+    $netIcon = if ($s.NetworkProt) { "$([char]9989) Activo (Anti-Phishing)" } else { "$([char]9888)$([char]65039) Clic en Bot$([char]243)n 1 para Activar" }
+    $devIcon = if ($s.DevModeReady) { "$([char]9989) Permisos Activos (Antigravity + GitHub + Localhost)" } else { "$([char]9889) Clic en Bot$([char]243)n 1 para Autorizar Permisos" }
+    $scanText = if ($s.QuickScanAge -gt 365) { "$([char]9888)$([char]65039) Nunca registrado" } else { "$([char]9989) Hace $($s.QuickScanAge) d$([char]237)as" }
 
     $lblIndicators.Text = (
-        "• Motor en Tiempo Real: $rtIcon   |   • Firewall Windows: $fwIcon   |   • Firmas de Virus: $($s.SigDate)`r`n" +
-        "• Bloqueo de Adware/PUA: $puaIcon   |   • Escudo Web Anti-Phishing: $netIcon`r`n" +
-        "• Modo Desarrollo Jace: $devIcon   |   • Último Escaneo: $scanText"
+        "$([char]8226) Motor en Tiempo Real: $rtIcon   |   $([char]8226) Firewall Windows: $fwIcon   |   $([char]8226) Firmas de Virus: $($s.SigDate)`r`n" +
+        "$([char]8226) Bloqueo de Adware/PUA: $puaIcon   |   $([char]8226) Escudo Web Anti-Phishing: $netIcon`r`n" +
+        "$([char]8226) Modo Desarrollo Jace: $devIcon   |   $([char]8226) $([char]218)ltimo Escaneo: $scanText"
     )
 }
 
@@ -267,57 +268,57 @@ Update-MpSignature -ErrorAction SilentlyContinue
 "@
 }
 
-# BOTÓN 1: BLINDAR + ACTIVAR MODO ANTIGRAVITY / GITHUB / LOCALHOST
+# BOT?N 1: BLINDAR + ACTIVAR MODO ANTIGRAVITY / GITHUB / LOCALHOST
 $btnHardenDev.Add_Click({
     Write-Log "=== ACTIVANDO BLINDAJE CHISPIPPEN + PERMISOS PARA ANTIGRAVITY, GITHUB Y LOCALHOST ===" "#38BDF8"
     $adminCmd = Get-ChispippenAdminScript
     if (-not (Test-IsAdmin)) {
-        Write-Log "Solicitando permiso de Administrador (haz clic en 'Sí' en la ventana emergente)..." "#FBBF24"
+        Write-Log "Solicitando permiso de Administrador (haz clic en 'S$([char]237)' en la ventana emergente)..." "#FBBF24"
         try {
             $bytes = [System.Text.Encoding]::Unicode.GetBytes($adminCmd)
             $encoded = [Convert]::ToBase64String($bytes)
             Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -EncodedCommand $encoded" -Verb RunAs -Wait
-            Write-Log "✅ Blindaje Antivirus activado (Anti-Adware, Anti-Phishing, Firewall)." "#34D399"
-            Write-Log "✅ Permisos concedidos para Antigravity (~/.gemini/antigravity), GitHub (git, gh, ssh), Node.js y puertos Localhost." "#34D399"
+            Write-Log "$([char]9989) Blindaje Antivirus activado (Anti-Adware, Anti-Phishing, Firewall)." "#34D399"
+            Write-Log "$([char]9989) Permisos concedidos para Antigravity (~/.gemini/antigravity), GitHub (git, gh, ssh), Node.js y puertos Localhost." "#34D399"
         } catch {
-            Write-Log "⚠️ No se aceptó la ventana de Administrador. Haz clic de nuevo y elige 'Sí'." "#F87171"
+            Write-Log "$([char]9888)$([char]65039) No se acept$([char]243) la ventana de Administrador. Haz clic de nuevo y elige 'S$([char]237)'." "#F87171"
         }
     } else {
         Invoke-Expression $adminCmd
-        Write-Log "✅ Blindaje Antivirus y Permisos de Antigravity/GitHub/Localhost aplicados con éxito." "#34D399"
+        Write-Log "$([char]9989) Blindaje Antivirus y Permisos de Antigravity/GitHub/Localhost aplicados con $([char]233)xito." "#34D399"
     }
     Refresh-UIStatus
 })
 
-# BOTÓN 2: VERIFICAR ENTORNO ANTIGRAVITY, GITHUB Y LOCALHOST (SISTEMA DE JACE)
+# BOT?N 2: VERIFICAR ENTORNO ANTIGRAVITY, GITHUB Y LOCALHOST (SISTEMA DE JACE)
 $btnCheckDev.Add_Click({
-    Write-Log "=== DIAGNÓSTICO DE PERMISOS: ANTIGRAVITY + GITHUB + LOCALHOST (NEGOCIO DE JACE) ===" "#38BDF8"
+    Write-Log "=== DIAGN$([char]211)STICO DE PERMISOS: ANTIGRAVITY + GITHUB + LOCALHOST (NEGOCIO DE JACE) ===" "#38BDF8"
 
     # 1. Verificar carpeta Antigravity
     $agPath = Join-Path $env:USERPROFILE ".gemini\antigravity"
     if (Test-Path $agPath) {
-        Write-Log "✅ Entorno Antigravity detectado y accesible en: $agPath" "#34D399"
+        Write-Log "$([char]9989) Entorno Antigravity detectado y accesible en: $agPath" "#34D399"
     } else {
-        Write-Log "ℹ️ Carpeta .gemini\antigravity aún no creada en este usuario (quedará pre-autorizada)." "#93C5FD"
+        Write-Log "$([char]8505)$([char]65039) Carpeta .gemini\antigravity a$([char]250)n no creada en este usuario (quedar$([char]225) pre-autorizada)." "#93C5FD"
     }
 
     # 2. Verificar herramientas instaladas (Node, Git, GitHub CLI, SSH)
     foreach ($tool in @("node", "git", "gh", "ssh")) {
         $cmd = Get-Command $tool -ErrorAction SilentlyContinue
         if ($cmd) {
-            Write-Log "✅ Herramienta autorizada disponible: $($cmd.Name) -> $($cmd.Source)" "#34D399"
+            Write-Log "$([char]9989) Herramienta autorizada disponible: $($cmd.Name) -> $($cmd.Source)" "#34D399"
         } else {
-            Write-Log "⚠️ Herramienta no instalada aún en esta PC: $tool" "#FBBF24"
+            Write-Log "$([char]9888)$([char]65039) Herramienta no instalada a$([char]250)n en esta PC: $tool" "#FBBF24"
         }
     }
 
     # 3. Verificar conectividad con GitHub (API / HTTPS 443)
-    Write-Log "Verificando conexión segura con GitHub (https://api.github.com)..." "#93C5FD"
+    Write-Log "Verificando conexi$([char]243)n segura con GitHub (https://api.github.com)..." "#93C5FD"
     try {
         $ghRes = Invoke-WebRequest -Uri "https://api.github.com" -UseBasicParsing -TimeoutSec 6 -ErrorAction Stop
-        Write-Log "✅ Conexión con GitHub perfecta (HTTP $($ghRes.StatusCode) - Sin bloqueos de Firewall)." "#34D399"
+        Write-Log "$([char]9989) Conexi$([char]243)n con GitHub perfecta (HTTP $($ghRes.StatusCode) - Sin bloqueos de Firewall)." "#34D399"
     } catch {
-        Write-Log "⚠️ No se pudo conectar con GitHub: $($_.Exception.Message)" "#F87171"
+        Write-Log "$([char]9888)$([char]65039) No se pudo conectar con GitHub: $($_.Exception.Message)" "#F87171"
     }
 
     # 4. Verificar servidores Localhost activos en este momento
@@ -329,19 +330,19 @@ $btnCheckDev.Add_Click({
     if ($listeners) {
         foreach ($l in $listeners) {
             $pName = (Get-Process -Id $l.OwningProcess -ErrorAction SilentlyContinue).ProcessName
-            Write-Log "  🟢 Servidor Localhost activo en puerto $($l.LocalPort) (Proceso: $pName, PID: $($l.OwningProcess)) - Permitido" "#34D399"
+            Write-Log "  $([char]::ConvertFromUtf32(128994)) Servidor Localhost activo en puerto $($l.LocalPort) (Proceso: $pName, PID: $($l.OwningProcess)) - Permitido" "#34D399"
         }
     } else {
-        Write-Log "  ℹ️ Ningún servidor Localhost corriendo en este instante (Puertos 3000, 5173, 8080 listos y abiertos para cuando inicies el sistema de Jace)." "#E2E8F0"
+        Write-Log "  $([char]8505)$([char]65039) Ning$([char]250)n servidor Localhost corriendo en este instante (Puertos 3000, 5173, 8080 listos y abiertos para cuando inicies el sistema de Jace)." "#E2E8F0"
     }
 
-    Write-Log "✅ Diagnóstico para el sistema del negocio de Jace finalizado." "#34D399"
+    Write-Log "$([char]9989) Diagn$([char]243)stico para el sistema del negocio de Jace finalizado." "#34D399"
 })
 
-# BOTÓN 3: ESCANEO RÁPIDO + HEURÍSTICO (RESPETANDO PROYECTOS DE ANTIGRAVITY/JACE)
+# BOT?N 3: ESCANEO R?PIDO + HEUR?STICO (RESPETANDO PROYECTOS DE ANTIGRAVITY/JACE)
 $btnQuickScan.Add_Click({
-    Write-Log "=== INICIANDO ESCANEO CHISPIPPEN (MOTOR HEURÍSTICO + DEFENDER) ===" "#38BDF8"
-    Write-Log "Fase 1/2: Buscando virus camuflados con doble extensión en Descargas y Archivos Temporales..." "#93C5FD"
+    Write-Log "=== INICIANDO ESCANEO CHISPIPPEN (MOTOR HEUR$([char]205)STICO + DEFENDER) ===" "#38BDF8"
+    Write-Log "Fase 1/2: Buscando virus camuflados con doble extensi$([char]243)n en Descargas y Archivos Temporales..." "#93C5FD"
 
     $scanPaths = @(
         (Join-Path $env:USERPROFILE "Downloads"),
@@ -363,24 +364,24 @@ $btnQuickScan.Add_Click({
     }
 
     if ($suspiciousFound -eq 0) {
-        Write-Log "✅ Fase 1 limpia: 0 archivos trampa en Descargas/Temp (Tus carpetas de Antigravity y GitHub están protegidas y excluidas de falsos positivos)." "#34D399"
+        Write-Log "$([char]9989) Fase 1 limpia: 0 archivos trampa en Descargas/Temp (Tus carpetas de Antigravity y GitHub est$([char]225)n protegidas y excluidas de falsos positivos)." "#34D399"
     }
 
-    Write-Log "Fase 2/2: Ejecutando Escaneo Rápido del sistema (1-2 minutos)..." "#93C5FD"
+    Write-Log "Fase 2/2: Ejecutando Escaneo R$([char]225)pido del sistema (1-2 minutos)..." "#93C5FD"
     try {
         Start-MpScan -ScanType QuickScan -ErrorAction Stop
-        Write-Log "✅ ESCANEO RÁPIDO COMPLETADO: Tu equipo está limpio y listo para trabajar." "#34D399"
+        Write-Log "$([char]9989) ESCANEO R$([char]193)PIDO COMPLETADO: Tu equipo est$([char]225) limpio y listo para trabajar." "#34D399"
     } catch {
         $mpCmd = Join-Path $env:ProgramFiles "Windows Defender\MpCmdRun.exe"
         if (Test-Path $mpCmd) {
             & $mpCmd -Scan -ScanType 1 | Out-Null
-            Write-Log "✅ ESCANEO RÁPIDO COMPLETADO." "#34D399"
+            Write-Log "$([char]9989) ESCANEO R$([char]193)PIDO COMPLETADO." "#34D399"
         }
     }
     Refresh-UIStatus
 })
 
-# BOTÓN 4: MONITOR DE RED Y PROCESOS
+# BOT?N 4: MONITOR DE RED Y PROCESOS
 $btnNetAudit.Add_Click({
     Write-Log "=== MONITOR DE PROCESOS Y CONEXIONES DE RED ===" "#38BDF8"
     $conns = Get-NetTCPConnection -State Established -ErrorAction SilentlyContinue |
@@ -390,20 +391,20 @@ $btnNetAudit.Add_Click({
     foreach ($c in ($conns | Select-Object -First 20)) {
         $procName = "Sistema"
         try { $procName = (Get-Process -Id $c.OwningProcess -ErrorAction SilentlyContinue).ProcessName } catch {}
-        Write-Log ("  • Proceso: {0,-18} (PID {1,-6}) -> {2}:{3}" -f $procName, $c.OwningProcess, $c.RemoteAddress, $c.RemotePort) "#E2E8F0"
+        Write-Log ("  $([char]8226) Proceso: {0,-18} (PID {1,-6}) -> {2}:{3}" -f $procName, $c.OwningProcess, $c.RemoteAddress, $c.RemotePort) "#E2E8F0"
     }
-    Write-Log "✅ Auditoría finalizada." "#34D399"
+    Write-Log "$([char]9989) Auditor$([char]237)a finalizada." "#34D399"
 })
 
-# BOTÓN 5: ACTUALIZAR FIRMAS
+# BOT?N 5: ACTUALIZAR FIRMAS
 $btnUpdateSigs.Add_Click({
     Write-Log "Actualizando firmas de virus de Chispippen Antivirus..." "#38BDF8"
     Update-MpSignature -ErrorAction SilentlyContinue
-    Write-Log "✅ Base de datos de virus al día." "#34D399"
+    Write-Log "$([char]9989) Base de datos de virus al d$([char]237)a." "#34D399"
     Refresh-UIStatus
 })
 
-# BOTÓN 6: ESCANEAR CARPETA O USB
+# BOT?N 6: ESCANEAR CARPETA O USB
 $btnScanFolder.Add_Click({
     $dialog = New-Object System.Windows.Forms.FolderBrowserDialog
     $dialog.Description = "Selecciona la carpeta o USB a escanear con Chispippen Antivirus:"
@@ -411,37 +412,39 @@ $btnScanFolder.Add_Click({
         $p = $dialog.SelectedPath
         Write-Log "Analizando: $p ..." "#38BDF8"
         Start-MpScan -ScanType CustomScan -ScanPath $p -ErrorAction SilentlyContinue
-        Write-Log "✅ Análisis completado en: $p" "#34D399"
+        Write-Log "$([char]9989) An$([char]225)lisis completado en: $p" "#34D399"
     }
 })
 
-# BOTÓN 7: LIMPIAR TEMPORALES (SIN TOCAR PROYECTOS NI ANTIGRAVITY)
+# BOT?N 7: LIMPIAR TEMPORALES (SIN TOCAR PROYECTOS NI ANTIGRAVITY)
 $btnCleanTemp.Add_Click({
-    Write-Log "Limpiando caché temporal de Windows ($env:TEMP) sin tocar Antigravity ni proyectos..." "#38BDF8"
+    Write-Log "Limpiando cach$([char]233) temporal de Windows ($env:TEMP) sin tocar Antigravity ni proyectos..." "#38BDF8"
     Get-ChildItem -Path $env:TEMP -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-    Write-Log "✅ Archivos temporales limpiados correctamente." "#34D399"
+    Write-Log "$([char]9989) Archivos temporales limpiados correctamente." "#34D399"
 })
 
-# BOTÓN 8: ESCANEO DIARIO AUTOMÁTICO
+# BOT?N 8: ESCANEO DIARIO AUTOM?TICO
 $btnScheduleTask.Add_Click({
-    Write-Log "Activando programación de escaneo diario de Chispippen Antivirus..." "#38BDF8"
+    Write-Log "Activando programaci$([char]243)n de escaneo diario de Chispippen Antivirus..." "#38BDF8"
     try {
         $action = New-ScheduledTaskAction -Execute "MpCmdRun.exe" -Argument "-Scan -ScanType 1" -WorkingDirectory "$env:ProgramFiles\Windows Defender"
         $trigger = New-ScheduledTaskTrigger -Daily -At 12:30PM
         Register-ScheduledTask -TaskName "Chispippen_Escaneo_Diario" -Action $action -Trigger $trigger -Description "Escaneo diario de Chispippen Antivirus" -Force -ErrorAction Stop | Out-Null
-        Write-Log "✅ Escaneo automático diario configurado a las 12:30 PM." "#34D399"
+        Write-Log "$([char]9989) Escaneo autom$([char]225)tico diario configurado a las 12:30 PM." "#34D399"
     } catch {
-        Write-Log "ℹ️ Usa primero el botón '1. Blindar + Modo Antigravity' para activar permisos de Administrador." "#FBBF24"
+        Write-Log "$([char]8505)$([char]65039) Usa primero el bot$([char]243)n '1. Blindar + Modo Antigravity' para activar permisos de Administrador." "#FBBF24"
     }
 })
 
 Refresh-UIStatus
-Write-Log "Bienvenido a CHISPIPPEN ANTIVIRUS (Chisparo Security — Edición Negocio de Jace)." "#38BDF8"
-Write-Log "• Diseñado especialmente para proteger tu PC mientras trabajas libremente con Antigravity, GitHub y Localhost." "#E2E8F0"
-Write-Log "• Haz clic en '1. Blindar + Modo Antigravity' para autorizar todos los puertos Localhost, GitHub y carpetas de trabajo." "#34D399"
-Write-Log "• Haz clic en '2. Verificar GitHub & Localhost' para comprobar que tus herramientas del negocio de Jace estén listas." "#93C5FD"
+Write-Log "Bienvenido a CHISPIPPEN ANTIVIRUS (Chisparo Security $([char]8212) Edici$([char]243)n Negocio de Jace)." "#38BDF8"
+Write-Log "$([char]8226) Dise$([char]241)ado especialmente para proteger tu PC mientras trabajas libremente con Antigravity, GitHub y Localhost." "#E2E8F0"
+Write-Log "$([char]8226) Haz clic en '1. Blindar + Modo Antigravity' para autorizar todos los puertos Localhost, GitHub y carpetas de trabajo." "#34D399"
+Write-Log "$([char]8226) Haz clic en '2. Verificar GitHub & Localhost' para comprobar que tus herramientas del negocio de Jace est$([char]233)n listas." "#93C5FD"
 
 $form.Add_Shown({
+    [Chispippen.Win32Window]::ShowWindow($form.Handle, 5) | Out-Null
+    [Chispippen.Win32Window]::SetForegroundWindow($form.Handle) | Out-Null
     $form.TopMost = $true
     $form.Activate()
     $form.BringToFront()
