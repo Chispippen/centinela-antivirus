@@ -1,11 +1,12 @@
 @echo off
-title Instalador de Centinela Antivirus (Windows 10/11)
+title Instalador de Chispippen Antivirus (Chisparo Security - Negocio de Jace)
 color 0B
-echo ====================================================================
-echo   CENTINELA ANTIVIRUS - INSTALADOR AUTOMATICO GRATUITO (WINDOWS)
-echo ====================================================================
+echo ========================================================================
+echo   CHISPIPPEN ANTIVIRUS (CHISPARO SECURITY) - INSTALADOR OFICIAL
+echo   Edicion Especial: Antigravity + GitHub + Localhost (Negocio de Jace)
+echo ========================================================================
 echo.
-echo Descargando e instalando Centinela Antivirus y Blindaje de Windows...
+echo Descargando e instalando Chispippen Antivirus y permisos de desarrollo...
 echo.
 powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $script = (Invoke-WebRequest -Uri 'https://chispippen.github.io/centinela-antivirus/instalar.ps1' -UseBasicParsing).Content; Invoke-Expression $script"
 echo.
