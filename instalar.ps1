@@ -1,13 +1,13 @@
 # ==============================================================================
-# INSTALADOR OFICIAL DE CHISPIPPEN ANTIVIRUS (CHISPARO SECURITY)
+# INSTALADOR OFICIAL DE CHISPIPPEN ANTIVIRUS + GUARDIAN DE ALERTAS 24/7
 # Edicion Especial: Antigravity + GitHub + Localhost (Negocio de Jace)
 # ==============================================================================
 $ErrorActionPreference = "SilentlyContinue"
 
 Write-Host ""
 Write-Host "=====================================================================" -ForegroundColor Cyan
-Write-Host "   INSTALANDO CHISPIPPEN ANTIVIRUS (CHISPARO SECURITY EDITION)       " -ForegroundColor Cyan
-Write-Host "   Proteccion + Permisos para Antigravity, GitHub & Localhost (Jace) " -ForegroundColor Cyan
+Write-Host "   INSTALANDO CHISPIPPEN ANTIVIRUS + GUARDIAN DE ALERTAS EN VIVO     " -ForegroundColor Cyan
+Write-Host "   Proteccion para PC, Sistema y Plataformas (Negocio de Jace)       " -ForegroundColor Cyan
 Write-Host "=====================================================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -16,22 +16,31 @@ if (-not (Test-Path $InstallDir)) {
     New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
 }
 
-Write-Host "[1/5] Instalando Chispippen Antivirus en $InstallDir ..." -ForegroundColor Yellow
+Write-Host "[1/5] Instalando Chispippen Antivirus y Guardian de Alertas en $InstallDir ..." -ForegroundColor Yellow
 
 $AppPath = Join-Path $InstallDir "Chispippen-Antivirus.ps1"
+$GuardianPath = Join-Path $InstallDir "Chispippen-Guardian.ps1"
 $BatPath = Join-Path $InstallDir "Iniciar-Chispippen.bat"
 
-$LocalSource = Join-Path $PSScriptRoot "Chispippen-Antivirus.ps1"
-$utf8Bom = New-Object System.Text.UTF8Encoding($true)
+$LocalApp = Join-Path $PSScriptRoot "Chispippen-Antivirus.ps1"
+$LocalGuardian = Join-Path $PSScriptRoot "Chispippen-Guardian.ps1"
 
-if ($PSScriptRoot -and (Test-Path $LocalSource)) {
-    $rawContent = [System.IO.File]::ReadAllText($LocalSource, [System.Text.Encoding]::UTF8)
-    [System.IO.File]::WriteAllText($AppPath, $rawContent, $utf8Bom)
+if ($PSScriptRoot -and (Test-Path $LocalApp)) {
+    Copy-Item $LocalApp $AppPath -Force
 } else {
     $RepoUrl = "https://chispippen.github.io/chispippen-antivirus/Chispippen-Antivirus.ps1"
     $response = Invoke-WebRequest -Uri $RepoUrl -UseBasicParsing
-    $rawContent = [System.Text.Encoding]::UTF8.GetString($response.Content)
-    [System.IO.File]::WriteAllText($AppPath, $rawContent, $utf8Bom)
+    $rawContent = [System.Text.Encoding]::ASCII.GetString($response.Content)
+    [System.IO.File]::WriteAllText($AppPath, $rawContent, [System.Text.Encoding]::ASCII)
+}
+
+if ($PSScriptRoot -and (Test-Path $LocalGuardian)) {
+    Copy-Item $LocalGuardian $GuardianPath -Force
+} else {
+    $GuardUrl = "https://chispippen.github.io/chispippen-antivirus/Chispippen-Guardian.ps1"
+    $response2 = Invoke-WebRequest -Uri $GuardUrl -UseBasicParsing
+    $rawContent2 = [System.Text.Encoding]::ASCII.GetString($response2.Content)
+    [System.IO.File]::WriteAllText($GuardianPath, $rawContent2, [System.Text.Encoding]::ASCII)
 }
 
 $BatContent = @"
@@ -40,10 +49,13 @@ start "" powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%LOCALAPPDATA%
 "@
 [System.IO.File]::WriteAllText($BatPath, $BatContent, [System.Text.Encoding]::ASCII)
 
-Write-Host "[2/5] Creando acceso directo 'Chispippen Antivirus' en el Escritorio ..." -ForegroundColor Yellow
+Write-Host "[2/5] Configurando Guardian de Alertas Automaticas al encender la PC ..." -ForegroundColor Yellow
 try {
+    $runKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
+    $cmdVal = "powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$GuardianPath`""
+    Set-ItemProperty -Path $runKey -Name "ChispippenGuardian" -Value $cmdVal -ErrorAction SilentlyContinue
+
     $DesktopDir = [Environment]::GetFolderPath("Desktop")
-    # Eliminar acceso directo anterior si existia
     $OldShortcut = Join-Path $DesktopDir "Centinela Antivirus.lnk"
     if (Test-Path $OldShortcut) { Remove-Item $OldShortcut -Force -ErrorAction SilentlyContinue }
 
@@ -54,12 +66,10 @@ try {
     $Shortcut.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$AppPath`""
     $Shortcut.WorkingDirectory = $InstallDir
     $Shortcut.IconLocation = "imageres.dll,101"
-    $Shortcut.Description = "Chispippen Antivirus (Chisparo Security) - Antigravity, GitHub & Localhost"
+    $Shortcut.Description = "Chispippen Antivirus + Guardian de Alertas en Vivo"
     $Shortcut.Save()
-    Write-Host "      -> Icono 'Chispippen Antivirus' creado en el Escritorio." -ForegroundColor Green
-} catch {
-    Write-Host "      -> No se pudo crear el icono en el escritorio automaticamente." -ForegroundColor DarkYellow
-}
+    Write-Host "      -> Guardian 24/7 activado e icono 'Chispippen Antivirus' listo en el Escritorio." -ForegroundColor Green
+} catch {}
 
 Write-Host "[3/5] Actualizando base de datos de firmas de virus ..." -ForegroundColor Yellow
 Update-MpSignature -ErrorAction SilentlyContinue
@@ -115,11 +125,11 @@ if ($isAdmin) {
     }
 }
 
-Write-Host "[5/5] Abriendo Chispippen Antivirus ..." -ForegroundColor Yellow
+Write-Host "[5/5] Iniciando Guardian de Alertas y abriendo Chispippen Antivirus ..." -ForegroundColor Yellow
+Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$GuardianPath`""
 Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$AppPath`""
 
 Write-Host ""
 Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host "   CHISPIPPEN ANTIVIRUS INSTALADO CON EXITO                          " -ForegroundColor Green
-Write-Host "   Listo para trabajar con Antigravity, GitHub y Localhost (Jace).   " -ForegroundColor Green
+Write-Host "   CHISPIPPEN ANTIVIRUS + GUARDIAN DE ALERTAS INSTALADO CON EXITO    " -ForegroundColor Green
 Write-Host "=====================================================================" -ForegroundColor Green
